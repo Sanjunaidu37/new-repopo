@@ -35,7 +35,39 @@
     capture_pageview: true  // optional, defaults to true
   });
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  if (typeof posthog === 'undefined') {
+    return console.error("PostHog not found.");
+  }
 
+  const showBar = Math.random() < 0.5 ? false : true; // 50% chance
+
+  if (showBar) {
+    // Create the top bar
+    const topBar = document.createElement('div');
+    topBar.textContent = "🚚 Free Shipping on Orders Over ₹499";
+    topBar.style.backgroundColor = "#fffae6";
+    topBar.style.color = "#333";
+    topBar.style.textAlign = "center";
+    topBar.style.padding = "10px";
+    topBar.style.fontWeight = "bold";
+    topBar.style.position = "sticky"; // stays at top when scrolling
+    topBar.style.top = "0";
+    topBar.style.zIndex = "9999";
+    topBar.style.borderBottom = "1px solid #ddd";
+
+    // Insert it at the top of the body
+    document.body.insertBefore(topBar, document.body.firstChild);
+
+    console.log("Shipping Bar Variant: Shown");
+    posthog.capture('Shipping Bar Variant Shown', { variant: 'Shown' });
+  } else {
+    console.log("Shipping Bar Variant: Hidden");
+    posthog.capture('Shipping Bar Variant Shown', { variant: 'Hidden' });
+  }
+});
+</script>
 </head>
 
 <body>
