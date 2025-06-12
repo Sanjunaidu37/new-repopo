@@ -35,29 +35,7 @@
     capture_pageview: true  // optional, defaults to true
   });
 </script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  if (typeof posthog === 'undefined') return console.error("PostHog not found.");
 
-  // --- CTA Button A/B Test ---
-  const btn = document.querySelector('.cta-btn');
-  const ctaVariant = Math.random() < 0.5 ? 'Original' : 'Optimized';
-  if (btn) {
-    btn.textContent = ctaVariant === 'Original' ? 'Shop Now' : 'Get 10% Off Today';
-    posthog.capture('Shoplane - CTA Variant Shown', { variant: ctaVariant });
-    btn.addEventListener('click', () => posthog.capture('Shoplane - CTA Clicked', { variant: ctaVariant }));
-  }
-
-  // --- Header Color A/B Test ---
-  const hdr = document.querySelector('header');
-  const headerVariant = Math.random() < 0.5 ? 'Light' : 'Dark';
-  if (hdr) {
-    hdr.style.backgroundColor = headerVariant === 'Light' ? '#fff' : '#111';
-    hdr.style.color = headerVariant === 'Light' ? '#000' : '#fff';
-    posthog.capture('Shoplane - Header Variant Shown', { variant: headerVariant });
-  }
-});
-</script>
 </head>
 
 <body>
