@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head> 
+<!-- before other scripts in <head> -->
+<script>
+  !function(t,e){var o,n,p,r;e.__SV=1,window.posthog=e,e._i=[],e.init=function(i,s,a){
+    function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){
+      t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(o=t.createElement("script")).type="text/javascript",
+    o.async=!0,o.src="https://us.i.posthog.com/static/array.js",
+    (n=t.getElementsByTagName("script")[0]).parentNode.insertBefore(o,n),
+    r=e;for(var c=["capture","identify","alias","people.set","people.set_once","reset","group","set_config","onFeatureFlags"],u=0;u<c.length;u++)g(r,c[u]);
+    e.i.push([i,s,a])}, e._SV=1
+  }(document,window.posthog||[]);
+  posthog.init('phc_VtipDVW2bHASVZbDQlWZTzIZfaxYPvOM7eLzqw4icKb', {api_host: 'https://us.i.posthog.com'});
+</script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -35,6 +48,7 @@
     capture_pageview: true  // optional, defaults to true
   });
 </script>
+
 
 </head>
 
@@ -97,7 +111,29 @@
             document.getElementById(4).innerHTML = req.responseText;
         }
     </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  if (typeof posthog === 'undefined') return console.error("PostHog not found.");
 
+  // --- CTA Button A/B Test ---
+  const btn = document.querySelector('.cta-btn');
+  const ctaVariant = Math.random() < 0.5 ? 'Original' : 'Optimized';
+  if (btn) {
+    btn.textContent = ctaVariant === 'Original' ? 'Shop Now' : 'Get 10% Off Today';
+    posthog.capture('Shoplane - CTA Variant Shown', { variant: ctaVariant });
+    btn.addEventListener('click', () => posthog.capture('Shoplane - CTA Clicked', { variant: ctaVariant }));
+  }
+
+  // --- Header Color A/B Test ---
+  const hdr = document.querySelector('header');
+  const headerVariant = Math.random() < 0.5 ? 'Light' : 'Dark';
+  if (hdr) {
+    hdr.style.backgroundColor = headerVariant === 'Light' ? '#fff' : '#111';
+    hdr.style.color = headerVariant === 'Light' ? '#000' : '#fff';
+    posthog.capture('Shoplane - Header Variant Shown', { variant: headerVariant });
+  }
+});
+</script>
 </body>
 
 <!-- slider JS START -->
